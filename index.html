@@ -149,6 +149,17 @@
     text-decoration: none;
   }
 
+  .block.no-flip .face-front img {
+    transition: transform 0.3s ease;
+  }
+
+  .block.no-flip:hover .face-front img {
+    transform: scale(1.06);
+  }
+
+  .block.no-flip:hover .face-front { opacity: 1; }
+  .block.no-flip:hover .face-back { opacity: 0; }
+
   .block .face {
     position: absolute;
     inset: 0;
@@ -218,7 +229,7 @@
     padding: 90px var(--unit);
     font-size: 14px;
     line-height: 1.15;
-    margin-top: calc(var(--row-gap-after-caption) + 30px);
+    margin-top: calc(var(--row-gap-after-caption) + 120px);
     letter-spacing: 0.04em;
   }
 
@@ -453,12 +464,9 @@
         <div class="spacer"></div>
       </div>
       <div class="cell">
-        <a class="block" href="projects/on-call-cafe.html" style="aspect-ratio: 850 / 600;">
+        <a class="block no-flip" href="projects/on-call-cafe.html" style="aspect-ratio: 850 / 600;">
           <div class="face face-front">
             <img src="images/on-call-cafe.jpg" alt="On Call Cafe">
-          </div>
-          <div class="face face-back">
-            <img src="images/on-call-cafe-hover.jpg" alt="On Call Cafe">
           </div>
         </a>
         <div class="caption">
@@ -468,41 +476,26 @@
       </div>
     </div>
 
-    <!-- Row 3: left col full (Fear of God Essentials), right col splits (Converse / Nike NFL) -->
+    <!-- Row 3: left col splits (Stanford Daily / Sharp stacked), right col empty -->
     <div class="row">
-      <div class="cell">
-        <a class="block" href="projects/stanford-daily.html" style="aspect-ratio: 500 / 450;">
-          <div class="face face-front">
-            <img src="images/stanford-daily.jpg" alt="The Stanford Daily">
-          </div>
-          <div class="face face-back">
-            <img src="images/stanford-daily-hover.jpg" alt="The Stanford Daily">
-          </div>
-        </a>
-        <div class="caption">
-          <div class="title">The Stanford Daily</div>
-          <div class="subtitle">Journalism</div>
-        </div>
-      </div>
       <div class="split">
-        <div class="spacer"></div>
         <div class="stack">
           <div class="cell">
-            <a class="block" href="projects/stanford-management.html" style="aspect-ratio: 380 / 400;">
+            <a class="block" href="projects/stanford-daily.html" style="aspect-ratio: 380 / 350;">
               <div class="face face-front">
-                <img src="images/smg.jpg" alt="SMG">
+                <img src="images/stanford-daily.jpg" alt="The Stanford Daily">
               </div>
               <div class="face face-back">
-                <img src="images/smg-hover.jpg" alt="SMG">
+                <img src="images/stanford-daily-hover.jpg" alt="The Stanford Daily">
               </div>
             </a>
             <div class="caption">
-              <div class="title">Stanford Management</div>
-              <div class="subtitle">Consulting</div>
+              <div class="title">The Stanford Daily</div>
+              <div class="subtitle">Journalism</div>
             </div>
           </div>
           <div class="cell">
-            <a class="block" href="projects/sharp.html" style="aspect-ratio: 380 / 400;">
+            <a class="block" href="projects/sharp.html" style="aspect-ratio: 380 / 350;">
               <div class="face face-front">
                 <img src="images/sharp.jpg" alt="Sharp, 2026">
               </div>
@@ -516,6 +509,11 @@
             </div>
           </div>
         </div>
+        <div class="spacer"></div>
+      </div>
+      <div class="split">
+        <div class="spacer"></div>
+        <div class="spacer"></div>
       </div>
     </div>
 
