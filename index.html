@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maia Pak</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect width='50' height='50' fill='%23FD6269'/%3E%3C/svg%3E">
+<style>
+  :root{
+    /* single spacing unit reused everywhere — page margin, macro-column gap, split-column gap */
+    --unit: 12px;
+
+    --caption-gap-top: 6px;     /* image bottom -> caption title */
+    --caption-line-gap: 1px;     /* title -> subtitle */
+    --row-gap-after-caption: 58px; /* caption bottom -> next row top */
+
+    --green: #DCE05A;
+    --coral: #FD6269;
+    --ink: #111111;
+    --muted: #8a8a86;
+    --placeholder: #E7E6E2;
+    --placeholder-line: #d3d2cd;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: 'Times New Roman', Times, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .swatch {
+    position: fixed;
+    top: var(--unit);
+    left: var(--unit);
+    width: 40px;
+    height: 40px;
+    background: var(--coral);
+    z-index: 100;
+  }
+
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    padding: 14px var(--unit) 22px;
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    z-index: 50;
+    background: transparent;
+  }
+
+  .top-nav a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .top-nav a:hover { color: var(--green); }
+
+  .gallery {
+    padding: var(--unit);
+    padding-top: calc(var(--unit) + 50px);
+  }
+
+  .hero {
+    height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-inner {
+    width: 200px;
+    font-size: 14px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .hero-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .hero .name-row {
+    margin-bottom: 1.4em;
+  }
+
+  .hero a {
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s ease;
+    animation: flashGreen 3s ease;
+  }
+
+  .hero .name-row:has(a:hover) a { color: var(--green); }
+
+  @keyframes flashGreen {
+    0% { color: var(--green); }
+    75% { color: var(--green); }
+    100% { color: var(--ink); }
+  }
+
+  /* each row = 2 macro columns, left / right */
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--unit);
+    align-items: start;
+  }
+
+  .row + .row {
+    margin-top: var(--row-gap-after-caption);
+  }
+
+  /* a macro column that splits into two half-width tiles */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--unit);
+    align-items: start;
+  }
+
+  .cell { display: block; }
+  .spacer { /* invisible placeholder pushing a tile to the right half of a split column */ }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--row-gap-after-caption);
+  }
+
+  .block {
+    width: 100%;
+    background: var(--placeholder);
+    position: relative;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+  }
+
+  .block .face {
+    position: absolute;
+    inset: 0;
+    background: var(--placeholder);
+    background-image:
+      linear-gradient(45deg, var(--placeholder-line) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--placeholder-line) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--placeholder-line) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--placeholder-line) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    transition: opacity 0.4s ease;
+  }
+
+  .block .face-back {
+    opacity: 0;
+  }
+
+  .block:hover .face-front { opacity: 0; }
+  .block:hover .face-back { opacity: 1; }
+
+  .block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .block .ratio-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .caption {
+    margin-top: var(--caption-gap-top);
+  }
+
+  .caption .title {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+  }
+
+  .caption .subtitle {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink);
+    margin-top: var(--caption-line-gap);
+    line-height: 1.15;
+  }
+
+  /* ---------- Footer / nav bar ---------- */
+
+  .footer {
+    background: var(--green);
+    padding: 90px var(--unit);
+    font-size: 14px;
+    line-height: 1.15;
+    margin-top: calc(var(--row-gap-after-caption) + 30px);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left .loc { font-weight: 500; }
+  .footer-left .time { color: #333; }
+
+  .footer-right {
+    display: flex;
+    gap: 32px;
+  }
+  .footer-col { display: flex; flex-direction: column; gap: 6px; }
+  .footer-col a { color: var(--ink); text-decoration: none; }
+  .footer-col a:hover { text-decoration: underline; }
+  .footer-col .current { font-weight: 600; }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 760px) {
+    .hero-inner { font-size: 14px; }
+    .row { grid-template-columns: 1fr; }
+    .row + .row { margin-top: calc(var(--row-gap-after-caption) * 0.7); }
+    .split { grid-template-columns: 1fr 1fr; }
+    .footer-inner { flex-direction: column; gap: 24px; }
+    .footer-right { gap: 32px; flex-wrap: wrap; }
+  }
+  /* ---------- Password gate ---------- */
+
+  .gate {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gate-box {
+    text-align: center;
+  }
+
+  .gate-box p {
+    font-size: 14px;
+    margin: 0 0 14px 0;
+    color: var(--ink);
+  }
+
+  .gate-box input {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    letter-spacing: 0.04em;
+    outline: none;
+    width: 180px;
+  }
+
+  .gate-box input:focus {
+    border-color: var(--green);
+  }
+
+  .gate-error {
+    font-size: 12px;
+    color: var(--coral);
+    margin-top: 10px;
+    height: 14px;
+  }
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown > a {
+    cursor: pointer;
+  }
+
+  .nav-dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0;
+    padding-top: 10px;
+    background: transparent;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 100%;
+    z-index: 60;
+  }
+
+  .nav-dropdown .dropdown-menu a {
+    background: #ffffff;
+    padding: 2px 0;
+  }
+
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown.open .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu a {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+  <div class="gate" id="siteGate">
+    <div class="gate-box">
+      <p>This site is private.</p>
+      <input type="password" id="gatePassword" placeholder="Password" autocomplete="off">
+      <div class="gate-error" id="gateError"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var CORRECT = 'stickyrice';
+      var gate = document.getElementById('siteGate');
+      var input = document.getElementById('gatePassword');
+      var error = document.getElementById('gateError');
+
+      if (sessionStorage.getItem('site_unlocked') === 'yes') {
+        gate.style.display = 'none';
+      } else {
+        input.focus();
+      }
+
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          if (input.value.trim().toLowerCase() === CORRECT) {
+            sessionStorage.setItem('site_unlocked', 'yes');
+            gate.style.display = 'none';
+          } else {
+            error.textContent = 'Incorrect password';
+            input.value = '';
+          }
+        }
+      });
+    })();
+  </script>
+
+  <div class="swatch"></div>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="projects-main.html">Projects</a>
+      <div class="dropdown-menu">
+        <a href="projects-main.html">Main</a>
+        <a href="projects-small.html">Small</a>
+      </div>
+    </div>
+    <a href="about.html">About</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-row name-row">
+        <div class="col-l"><a href="about.html">Maia</a></div>
+        <div class="col-r"><a href="about.html">Pak</a></div>
+      </div>
+      <div class="hero-row">
+        <div class="col-l">Stanford</div>
+        <div class="col-r">University</div>
+      </div>
+      <div class="hero-row">
+        <div class="col-l">Strategy,</div>
+        <div class="col-r">Design,</div>
+      </div>
+      <div class="hero-row">
+        <div class="col-l">Writing,</div>
+        <div class="col-r">&amp;</div>
+      </div>
+      <div class="hero-row">
+        <div class="col-l">Communications</div>
+        <div class="col-r"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery">
+
+    <!-- Row 1: left col splits into 2 (Mineral Health / American Eagle), right col full (Virgin Music) -->
+    <div class="row">
+      <div class="cell">
+        <a class="block" href="projects/tesla.html" style="aspect-ratio: 800 / 650;">
+          <div class="face face-front">
+            <img src="images/tesla.jpg" alt="Tesla Design Studio">
+          </div>
+          <div class="face face-back">
+            <img src="images/tesla-hover.jpg" alt="Tesla Design Studio">
+          </div>
+        </a>
+        <div class="caption">
+          <div class="title">Tesla Design Studio</div>
+          <div class="subtitle">Communications</div>
+        </div>
+      </div>
+      <div class="split">
+        <div class="spacer"></div>
+        <div class="cell">
+          <a class="block" href="projects/dschool.html" style="aspect-ratio: 380 / 300;">
+            <div class="face face-front">
+              <img src="images/dschool.jpg" alt="d.school">
+            </div>
+            <div class="face face-back">
+              <img src="images/dschool-hover.jpg" alt="d.school">
+            </div>
+          </a>
+          <div class="caption">
+            <div class="title">d.school</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: right col full (On Call Cafe) -->
+    <div class="row">
+      <div class="split">
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="cell">
+        <a class="block" href="projects/on-call-cafe.html" style="aspect-ratio: 850 / 600;">
+          <div class="face face-front">
+            <img src="images/on-call-cafe.jpg" alt="On Call Cafe">
+          </div>
+          <div class="face face-back">
+            <img src="images/on-call-cafe-hover.jpg" alt="On Call Cafe">
+          </div>
+        </a>
+        <div class="caption">
+          <div class="title">On Call Cafe</div>
+          <div class="subtitle">Brand Strategy</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: left col full (Fear of God Essentials), right col splits (Converse / Nike NFL) -->
+    <div class="row">
+      <div class="cell">
+        <a class="block" href="projects/stanford-daily.html" style="aspect-ratio: 500 / 450;">
+          <div class="face face-front">
+            <img src="images/stanford-daily.jpg" alt="The Stanford Daily">
+          </div>
+          <div class="face face-back">
+            <img src="images/stanford-daily-hover.jpg" alt="The Stanford Daily">
+          </div>
+        </a>
+        <div class="caption">
+          <div class="title">The Stanford Daily</div>
+          <div class="subtitle">Journalism</div>
+        </div>
+      </div>
+      <div class="split">
+        <div class="spacer"></div>
+        <div class="stack">
+          <div class="cell">
+            <a class="block" href="projects/stanford-management.html" style="aspect-ratio: 380 / 400;">
+              <div class="face face-front">
+                <img src="images/smg.jpg" alt="SMG">
+              </div>
+              <div class="face face-back">
+                <img src="images/smg-hover.jpg" alt="SMG">
+              </div>
+            </a>
+            <div class="caption">
+              <div class="title">Stanford Management</div>
+              <div class="subtitle">Consulting</div>
+            </div>
+          </div>
+          <div class="cell">
+            <a class="block" href="projects/sharp.html" style="aspect-ratio: 380 / 400;">
+              <div class="face face-front">
+                <img src="images/sharp.jpg" alt="Sharp, 2026">
+              </div>
+              <div class="face face-back">
+                <img src="images/sharp-hover.jpg" alt="Sharp, 2026">
+              </div>
+            </a>
+            <div class="caption">
+              <div class="title">Sharp, 2026</div>
+              <div class="subtitle">Fine Art</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer / green bar -->
+  <div class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="loc">Los Angeles, CA</div>
+        <div class="time" id="localTime">--:--</div>
+      </div>
+
+      <div class="footer-right">
+        <div class="footer-col">
+          <a href="index.html">Home</a>
+          <a href="projects-main.html">Projects</a>
+          <a href="about.html">About</a>
+        </div>
+        <div class="footer-col">
+          <a href="https://www.linkedin.com/in/maiapak/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="footer-col">
+          <a href="mailto:maiapak@stanford.edu">maiapak@stanford.edu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const el = document.getElementById('localTime');
+      const now = new Date();
+      let h = now.getHours();
+      const m = now.getMinutes().toString().padStart(2, '0');
+      const s = now.getSeconds().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; if (h === 0) h = 12;
+      el.textContent = `${h}:${m}:${s} ${ampm}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+
+
+  <script>
+    document.querySelectorAll('.nav-dropdown > a').forEach(function(trigger) {
+      trigger.addEventListener('click', function(e) {
+        var dropdown = trigger.parentElement;
+        if (window.matchMedia('(hover: none)').matches) {
+          if (!dropdown.classList.contains('open')) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+              if (d !== dropdown) d.classList.remove('open');
+            });
+            dropdown.classList.add('open');
+          }
+        }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+        if (!d.contains(e.target)) d.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
