@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stanford Management — Maia Pak</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect width='50' height='50' fill='%23FD6269'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --unit: 12px;
+    --green: #DCE05A;
+    --coral: #FD6269;
+    --ink: #111111;
+    --muted: #8a8a86;
+    --placeholder: #E7E6E2;
+    --placeholder-line: #d3d2cd;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: 'Times New Roman', Times, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .swatch {
+    position: fixed;
+    top: var(--unit);
+    left: var(--unit);
+    width: 40px;
+    height: 40px;
+    background: var(--coral);
+    z-index: 100;
+  }
+
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    padding: 14px var(--unit) 22px;
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    z-index: 50;
+    background: transparent;
+  }
+
+  .top-nav a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .top-nav a:hover { color: var(--green); }
+
+  .project {
+    padding: 140px var(--unit) 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .project-header {
+    margin-bottom: 40px;
+  }
+
+  .project-header .back {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+
+  .project-header .back:hover { color: var(--green); }
+
+  .project-header h1 {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 16px 0 4px 0;
+  }
+
+  .project-header .category {
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+  }
+
+  .project-body {
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+
+  .project-image {
+    width: 100%;
+    aspect-ratio: 900 / 600;
+    background: var(--placeholder);
+    background-image:
+      linear-gradient(45deg, var(--placeholder-line) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--placeholder-line) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--placeholder-line) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--placeholder-line) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .footer {
+    background: var(--green);
+    padding: 90px var(--unit);
+    font-size: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    margin-top: 80px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left .loc { font-weight: 500; }
+  .footer-left .time { color: #333; }
+
+  .footer-right { display: flex; gap: 32px; }
+  .footer-col { display: flex; flex-direction: column; gap: 6px; }
+  .footer-col a { color: var(--ink); text-decoration: none; }
+  .footer-col a:hover { text-decoration: underline; }
+
+  @media (max-width: 760px) {
+    .footer-inner { flex-direction: column; gap: 24px; }
+  }
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown > a {
+    cursor: pointer;
+  }
+
+  .nav-dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0;
+    padding-top: 10px;
+    background: transparent;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 100%;
+    z-index: 60;
+  }
+
+  .nav-dropdown .dropdown-menu a {
+    background: #ffffff;
+    padding: 2px 0;
+  }
+
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown.open .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu a {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+  <div class="swatch"></div>
+
+  <nav class="top-nav">
+    <a href="../index.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="../projects-main.html">Projects</a>
+      <div class="dropdown-menu">
+        <a href="../projects-main.html">Main</a>
+        <a href="../projects-small.html">Small</a>
+      </div>
+    </div>
+    <a href="../about.html">About</a>
+  </nav>
+
+  <div class="project">
+    <div class="project-header">
+      <a class="back" href="../projects.html">&larr; All projects</a>
+      <h1>Stanford Management</h1>
+      <div class="category">Consulting</div>
+    </div>
+
+    <div class="project-image">Project image</div>
+
+    <div class="project-body">
+      <p>Project details coming soon.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="loc">Los Angeles, CA</div>
+        <div class="time" id="localTime">--:--</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-col">
+          <a href="../index.html">Home</a>
+          <a href="../projects-main.html">Projects</a>
+          <a href="../about.html">About</a>
+        </div>
+        <div class="footer-col">
+          <a href="https://www.linkedin.com/in/maiapak/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="footer-col">
+          <a href="mailto:maiapak@stanford.edu">maiapak@stanford.edu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateTime() {
+      var el = document.getElementById('localTime');
+      var now = new Date();
+      var h = now.getHours();
+      var m = now.getMinutes().toString().padStart(2, '0');
+      var s = now.getSeconds().toString().padStart(2, '0');
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; if (h === 0) h = 12;
+      el.textContent = h + ':' + m + ':' + s + ' ' + ampm;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+
+
+  <script>
+    document.querySelectorAll('.nav-dropdown > a').forEach(function(trigger) {
+      trigger.addEventListener('click', function(e) {
+        var dropdown = trigger.parentElement;
+        if (window.matchMedia('(hover: none)').matches) {
+          if (!dropdown.classList.contains('open')) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+              if (d !== dropdown) d.classList.remove('open');
+            });
+            dropdown.classList.add('open');
+          }
+        }
+      });
+    });
+    document.addEventListener('click', function(e) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+        if (!d.contains(e.target)) d.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
