@@ -200,8 +200,18 @@
     padding: 8px;
   }
 
+  /* label stays hidden (but keeps its space) until the tile is hovered */
   .caption {
     margin-top: var(--caption-gap-top);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cell:has(.block:hover) .caption { opacity: 1; }
+
+  /* touch screens can't hover, so always show labels there */
+  @media (hover: none) {
+    .caption { opacity: 1; }
   }
 
   .caption .title {
@@ -430,7 +440,6 @@
         </a>
         <div class="caption">
           <div class="title">Tesla Design Studio</div>
-          <div class="subtitle">Communications</div>
         </div>
       </div>
       <div class="split">
@@ -442,7 +451,7 @@
             </div>
           </a>
           <div class="caption">
-            <div class="title">d.school</div>
+            <div class="title">Design</div>
           </div>
         </div>
       </div>
@@ -462,7 +471,6 @@
         </a>
         <div class="caption">
           <div class="title">On Call Cafe</div>
-          <div class="subtitle">Brand Strategy</div>
         </div>
       </div>
     </div>
