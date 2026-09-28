@@ -59,16 +59,19 @@
 
   /* ---------- About content ---------- */
 
+  /* photo sits just left of center, text starts just right of center */
   .about {
-    padding-top: 162px;
-    padding-bottom: 200px;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 80px var(--unit);
   }
 
   .about-image {
-    width: 21.56%;          /* 326 / 1512 */
-    max-width: 326px;
-    aspect-ratio: 326 / 429;
-    margin: 0 auto;
+    justify-self: end;
+    width: 270px;
+    aspect-ratio: 250 / 265;
     background: #E7E6E2;
     background-image:
       linear-gradient(45deg, #d3d2cd 25%, transparent 25%),
@@ -85,6 +88,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
     display: block;
   }
 
@@ -101,16 +105,14 @@
   }
 
   .about-text {
-    margin-top: 87px;
-    margin-left: 30.36%;      /* 459 / 1512 */
-    max-width: 340px;
-    font-size: 14px;
-    letter-spacing: 0.04em;
-    line-height: 1.3;
+    margin-left: 88px;
+    max-width: 310px;
+    font-size: 11px;
+    line-height: 1.25;
   }
 
   .about-text p {
-    margin: 0 0 17px 0;
+    margin: 0 0 14px 0;
   }
 
   .about-text p:last-child {
@@ -153,12 +155,16 @@
   /* ---------- Responsive ---------- */
 
   @media (max-width: 760px) {
-    .about { padding-top: 100px; }
-    .about-image { width: 60%; }
+    .about {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 40px;
+      padding-top: 100px;
+    }
+    .about-image { justify-self: center; width: 60%; }
     .about-text {
-      margin-left: var(--unit);
-      margin-right: var(--unit);
-      max-width: none;
+      margin-left: 0;
+      font-size: 14px;
     }
     .footer-inner { flex-direction: column; gap: 24px; }
     .footer-right { gap: 32px; flex-wrap: wrap; }
@@ -303,12 +309,10 @@
     </div>
 
     <div class="about-text">
-      <p>I&rsquo;m Maia Pak.</p>
-      <p>Currently at Stanford University.</p>
-      <p><span style="white-space: nowrap;">Communications and strategy are my bread and butter.</span><br>
-      As is <u><a href="blank.html" target="_blank" style="color: inherit;">bread and butter</a></u>.</p>
-      <p><span style="white-space: nowrap;">To learn, listen, and connect. To write, design, and create.</span><br>
-      I&rsquo;m hungry.</p>
+      <p>Hi, my name is Maia Pak.</p>
+      <p>I&rsquo;m a student at Stanford, previously at Tesla Design Studio.</p>
+      <p>Communication and strategy are my favorite things, along with journalism, tech, and design for people.</p>
+      <p>You can reach me at maiapak [at] stanford [dot] edu.</p>
     </div>
 
   </div>
