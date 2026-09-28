@@ -104,13 +104,21 @@
 
   .about-text {
     margin-left: 88px;
-    max-width: 420px;
+    width: 343px;         /* width of the "Tesla Design Studio" line */
+    max-width: 100%;
     font-size: 14px;
     line-height: 1.15;
   }
 
   .about-text p {
     margin: 0 0 17px 0;
+  }
+
+  /* each line stretched edge to edge, including the last one */
+  .about-text .justify-lines span {
+    display: block;
+    text-align: justify;
+    text-align-last: justify;
   }
 
   .about-text p:last-child {
@@ -305,7 +313,7 @@
     <div class="about-text">
       <p>Hi, my name is Maia Pak.</p>
       <p>I&rsquo;m a student at Stanford, previously at Tesla Design Studio.</p>
-      <p>Communication and strategy are my favorite things, along with journalism, tech, and design for people.</p>
+      <p class="justify-lines"><span>Communication and strategy are my favorite things, along</span><span>with journalism, tech, and design for people.</span></p>
       <p>You can reach me at maiapak [at] stanford [dot] edu.</p>
     </div>
 
