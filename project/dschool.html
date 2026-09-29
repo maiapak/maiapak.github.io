@@ -60,43 +60,12 @@
 
   .top-nav a:hover { color: var(--green); }
 
+  /* measurements taken from the 1512px-wide Figma frame, as % of page width */
   .project {
-    padding: 140px var(--unit) 80px;
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 84px 0 0;
   }
 
-  .project-header {
-    margin-bottom: 40px;
-  }
-
-  .project-header .back {
-    font-size: 13px;
-    color: var(--muted);
-    text-decoration: none;
-  }
-
-  .project-header .back:hover { color: var(--green); }
-
-  .project-header h1 {
-    font-size: 28px;
-    font-weight: 400;
-    margin: 16px 0 4px 0;
-  }
-
-  .project-header .category {
-    font-size: 14px;
-    font-style: italic;
-  }
-
-  .project-body {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .project-image {
-    width: 100%;
-    aspect-ratio: 900 / 600;
+  .placeholder {
     background: var(--placeholder);
     background-image:
       linear-gradient(45deg, var(--placeholder-line) 25%, transparent 25%),
@@ -105,20 +74,73 @@
       linear-gradient(-45deg, transparent 75%, var(--placeholder-line) 75%);
     background-size: 16px 16px;
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: var(--muted);
+    overflow: hidden;
   }
 
-  .project-image img {
+  .placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .hero-image {
+    width: 47.9%;
+    aspect-ratio: 641 / 359;
+    margin: 0 auto;
+  }
+
+  .project-title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-intro {
+    margin: 53px var(--unit) 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-rows {
+    margin-top: 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 71px;
+  }
+
+  /* image sits left of center, its text further right */
+  .project-row {
+    display: grid;
+    grid-template-columns: 18.7% 31.3% 14.1% 1fr;
+    align-items: center;
+  }
+
+  .project-row .row-image {
+    grid-column: 2;
+    aspect-ratio: 418 / 234;
+  }
+
+  .project-row .row-text {
+    grid-column: 4;
+    max-width: 250px;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  /* same look as the about page links: plain text, green on hover */
+  .project a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+  .project a:hover { color: var(--green); }
+
+  @media (max-width: 760px) {
+    .project { padding-top: 70px; }
+    .hero-image { width: calc(100% - 2 * var(--unit)); }
+    .project-rows { margin: 50px var(--unit) 0; gap: 40px; }
+    .project-row { grid-template-columns: 1fr; gap: 12px; }
+    .project-row .row-image,
+    .project-row .row-text { grid-column: 1; max-width: none; }
   }
 
   .footer {
@@ -126,7 +148,7 @@
     padding: 90px var(--unit);
     font-size: 14px;
     line-height: 1.15;
-    margin-top: 80px;
+    margin-top: 110px;
   }
 
   .footer-inner {
@@ -197,16 +219,30 @@
   </nav>
 
   <div class="project">
-    <div class="project-header">
-      <a class="back" href="../projects-main.html">&larr; All projects</a>
-      <h1>d.school</h1>
-      <div class="category">Design Thinking</div>
+    <div class="hero-image placeholder"></div>
+
+    <div class="project-title">
+      <div><a href="https://dschool.stanford.edu/" target="_blank" rel="noopener">d.school</a></div>
+      <div>2024-2028</div>
     </div>
 
-    <div class="project-image">Project image</div>
+    <p class="project-intro">I am pursuing a Bachelor of Science in Engineering at Stanford University&rsquo;s <a href="https://dschool.stanford.edu/" target="_blank" rel="noopener">d.school</a>.</p>
 
-    <div class="project-body">
-      <p>Project details coming soon.</p>
+    <div class="project-rows">
+      <div class="project-row">
+        <div class="row-image placeholder"></div>
+        <p class="row-text">Winning &ldquo;Expression&rdquo; design in Visual Frontiers. Inspired by the physical processing and design in traditional printmaking.</p>
+      </div>
+
+      <div class="project-row">
+        <div class="row-image placeholder"></div>
+        <p class="row-text">Rebrand for KiuKiu, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
+      </div>
+
+      <div class="project-row">
+        <div class="row-image placeholder"></div>
+        <p class="row-text">Project Manager and Event Planner for rocky&rsquo;s matcha x On Call Cafe x <a href="https://dschool.stanford.edu/" target="_blank" rel="noopener">d.school</a> entrepreneurship event.</p>
+      </div>
     </div>
   </div>
 
