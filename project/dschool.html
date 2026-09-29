@@ -144,6 +144,8 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    /* box widths aren't whole pixels, so trim 1px each side to hide slivers of neighboring slides */
+    clip-path: inset(0 1px);
   }
 
   .carousel .slides::-webkit-scrollbar { display: none; }
