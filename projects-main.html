@@ -86,17 +86,17 @@
     background-size: 16px 16px;
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
     overflow: hidden;
-    transition: opacity 0.25s ease;
   }
-
-  .project-tile:hover .image { opacity: 0.8; }
 
   .project-tile .image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
   }
+
+  .project-tile:hover .image img { transform: scale(1.06); }
 
   .project-tile .caption {
     flex: 1;
