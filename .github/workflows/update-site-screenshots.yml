@@ -1,6 +1,7 @@
-# Retakes the SCIDR homepage screenshot on the Consumer Research page every day (only saves it if the page changed).
-# Can also be run by hand: GitHub repo > Actions > "Update SCIDR screenshot" > Run workflow.
-name: Update SCIDR screenshot
+# Retakes the SCIDR and Wellness House Seoul screenshots on the Consumer Research page every day
+# (only saves one if that page changed).
+# Can also be run by hand: GitHub repo > Actions > "Update website screenshots" > Run workflow.
+name: Update website screenshots
 
 on:
   schedule:
@@ -21,23 +22,23 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Take screenshot
+      - name: Take screenshots
         run: |
           pip install playwright pillow
-          python scripts/update_scidr_screenshot.py
+          python scripts/update_site_screenshots.py
 
       - name: Publish if it changed
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add images/scidr-site.jpg
+          git add images/scidr-site.jpg images/wellnesshouse-site.jpg
           if git diff --cached --quiet; then
-            echo "Screenshot unchanged."
+            echo "Screenshots unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update SCIDR screenshot"
+          git commit -m "Update website screenshots"
           git push
           # make sure GitHub Pages rebuilds with the new image
           gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

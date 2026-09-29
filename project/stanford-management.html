@@ -213,7 +213,7 @@
 
   .carousel .dot.active { background: #ffffff; }
 
-  /* ---------- Linked screenshots and embedded websites ---------- */
+  /* ---------- Linked website screenshots ---------- */
   .carousel a.slide img { cursor: pointer; }
 
   /* a full-page screenshot you can scroll through inside the box */
@@ -224,22 +224,6 @@
 
   .carousel .slide.scroll img {
     height: auto;
-  }
-
-  /* a live website shown at desktop size, scaled down to fit the box (scale set in the script below) */
-  .carousel .slide.embed {
-    position: relative;
-    overflow: hidden;
-    background: #ffffff;
-  }
-
-  .carousel .slide.embed iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1440px;
-    border: 0;
-    transform-origin: 0 0;
   }
 
   /* ---------- Enlarged photo viewer ----------
@@ -408,7 +392,7 @@
       <div class="project-row">
         <div class="row-image carousel">
           <div class="slides">
-            <div class="slide embed"><iframe src="https://www.wellnesshouse-seoul.com/ko" title="Wellness House Seoul website" loading="lazy"></iframe></div>
+            <a class="slide scroll" href="https://www.wellnesshouse-seoul.com/ko" target="_blank" rel="noopener"><img src="../images/wellnesshouse-site.jpg" alt="Wellness House Seoul website homepage"></a>
           </div>
         </div>
         <p class="row-text">Completing consumer research for <a href="https://www.wellnesshouse-seoul.com/ko" target="_blank" rel="noopener">Wellness House Seoul</a>, a holistic wellness and beauty hub that analyzes health data using AI diagnostics and medical expertise.</p>
@@ -437,20 +421,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    // shrink embedded websites so they show their desktop layout inside the box
-    function fitEmbeds() {
-      document.querySelectorAll('.slide.embed').forEach(function(slide) {
-        var frame = slide.querySelector('iframe');
-        var scale = slide.clientWidth / 1440;
-        frame.style.transform = 'scale(' + scale + ')';
-        frame.style.height = (slide.clientHeight / scale) + 'px';
-      });
-    }
-    fitEmbeds();
-    window.addEventListener('resize', fitEmbeds);
-  </script>
 
   <script>
     // click a slideshow photo to see it large; < > and arrow keys page through that slideshow
