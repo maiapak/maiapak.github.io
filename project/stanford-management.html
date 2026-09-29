@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stanford Management — Maia Pak</title>
+<title>Consumer Research — Maia Pak</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Crect width='50' height='50' fill='%23FD6269'/%3E%3C/svg%3E">
 <style>
   :root{
@@ -60,43 +60,12 @@
 
   .top-nav a:hover { color: var(--green); }
 
+  /* measurements taken from the 1512px-wide Figma frame, as % of page width */
   .project {
-    padding: 140px var(--unit) 80px;
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 84px 0 0;
   }
 
-  .project-header {
-    margin-bottom: 40px;
-  }
-
-  .project-header .back {
-    font-size: 14px;
-    color: var(--muted);
-    text-decoration: none;
-  }
-
-  .project-header .back:hover { color: var(--green); }
-
-  .project-header h1 {
-    font-size: 14px;
-    font-weight: 400;
-    margin: 16px 0 4px 0;
-  }
-
-  .project-header .category {
-    font-size: 14px;
-    font-style: italic;
-  }
-
-  .project-body {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .project-image {
-    width: 100%;
-    aspect-ratio: 900 / 600;
+  .placeholder {
     background: var(--placeholder);
     background-image:
       linear-gradient(45deg, var(--placeholder-line) 25%, transparent 25%),
@@ -105,20 +74,217 @@
       linear-gradient(-45deg, transparent 75%, var(--placeholder-line) 75%);
     background-size: 16px 16px;
     background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    text-transform: uppercase;
-    color: var(--muted);
+    overflow: hidden;
   }
 
-  .project-image img {
+  .placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .hero-image {
+    width: 47.9%;
+    aspect-ratio: 641 / 359;
+    margin: 0 auto;
+  }
+
+  .project-title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-intro {
+    margin: 53px var(--unit) 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-rows {
+    margin-top: 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 71px;
+  }
+
+  /* image sits left of center, its text further right */
+  .project-row {
+    display: grid;
+    grid-template-columns: 18.7% 31.3% 14.1% 1fr;
+    align-items: center;
+  }
+
+  .project-row .row-image {
+    grid-column: 2;
+    aspect-ratio: 418 / 234;
+  }
+
+  .project-row .row-text {
+    grid-column: 4;
+    max-width: 250px;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  /* ---------- Photo slideshow ----------
+     each box holds any number of .slide elements; swipe/trackpad scrolls,
+     < > arrows sit just outside the box, dots show position */
+  .carousel {
+    position: relative;
+  }
+
+  .carousel .slides {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* box widths aren't whole pixels, so trim 1px each side to hide slivers of neighboring slides */
+    clip-path: inset(0 1px);
+  }
+
+  .carousel .slides::-webkit-scrollbar { display: none; }
+
+  .carousel .slide {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .carousel .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* shows the whole image on white instead of cropping it to fill the box */
+  .carousel .slide.fit { background: #ffffff; }
+  .carousel .slide.fit img { object-fit: contain; }
+
+  .carousel .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: 0;
+    padding: 8px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .carousel .arrow:hover { color: var(--green); }
+  .carousel .prev { right: 100%; margin-right: 6px; }
+  .carousel .next { left: 100%; margin-left: 6px; }
+
+  .carousel .dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .carousel .dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+
+  .carousel .dot.active { background: #ffffff; }
+
+  /* ---------- Enlarged photo viewer ----------
+     sits over the page (below the menu and square) so you stay grounded on the page */
+  .carousel .slide img { cursor: zoom-in; }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  /* fixed-size frame so the < > and Close stay put no matter the photo's shape */
+  .lightbox .lb-frame {
+    position: relative;
+    width: 70vw;
+    height: 72vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .lightbox button {
+    position: absolute;
+    background: none;
+    border: 0;
+    padding: 8px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .lightbox button:hover { color: var(--green); }
+  .lightbox .lb-close { bottom: 100%; right: -8px; }
+  .lightbox .lb-prev { right: 100%; margin-right: 6px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { left: 100%; margin-left: 6px; top: 50%; transform: translateY(-50%); }
+  .lightbox.single .lb-prev,
+  .lightbox.single .lb-next { display: none; }
+
+  /* same look as the about page links: plain text, green on hover */
+  .project a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+  .project a:hover { color: var(--green); }
+
+  @media (max-width: 760px) {
+    .project { padding-top: 70px; }
+    .hero-image { width: calc(100% - 2 * var(--unit)); }
+    .project-rows { margin: 50px var(--unit) 0; gap: 40px; }
+    .project-row { grid-template-columns: 1fr; gap: 12px; }
+    .project-row .row-image,
+    .project-row .row-text { grid-column: 1; max-width: none; }
+    .carousel .prev { right: auto; left: 0; margin: 0; }
+    .carousel .next { left: auto; right: 0; margin: 0; }
+    .carousel .arrow { color: #ffffff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+    .lightbox .lb-frame { width: calc(100vw - 4 * var(--unit)); height: 70vh; }
+    .lightbox .lb-prev,
+    .lightbox .lb-next { top: 100%; transform: none; margin: 0; }
+    .lightbox .lb-prev { right: auto; left: -8px; }
+    .lightbox .lb-next { left: auto; right: -8px; }
   }
 
   .footer {
@@ -126,7 +292,7 @@
     padding: 90px var(--unit);
     font-size: 14px;
     line-height: 1.15;
-    margin-top: 80px;
+    margin-top: 220px;
   }
 
   .footer-inner {
@@ -197,16 +363,27 @@
   </nav>
 
   <div class="project">
-    <div class="project-header">
-      <a class="back" href="../projects-main.html">&larr; All projects</a>
-      <h1>Stanford Management</h1>
-      <div class="category">Consulting</div>
+    <div class="hero-image carousel">
+      <div class="slides">
+        <div class="slide placeholder"></div>
+      </div>
     </div>
 
-    <div class="project-image">Project image</div>
+    <div class="project-title">
+      <div>Undergraduate Researcher</div>
+    </div>
 
-    <div class="project-body">
-      <p>Project details coming soon.</p>
+    <p class="project-intro">I work at the Stanford Center for Innovation and Design Research (SCIDR).</p>
+
+    <div class="project-rows">
+      <div class="project-row">
+        <div class="row-image carousel">
+          <div class="slides">
+            <div class="slide placeholder"></div>
+          </div>
+        </div>
+        <p class="row-text">Completing consumer research for Wellness House Seoul, a holistic wellness and beauty hub that analyzes health data using AI diagnostics and medical expertise.</p>
+      </div>
     </div>
   </div>
 
@@ -231,6 +408,116 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // click a slideshow photo to see it large; < > and arrow keys page through that slideshow
+    (function() {
+      var lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.innerHTML =
+        '<div class="lb-frame">' +
+          '<button class="lb-close">Close</button>' +
+          '<button class="lb-prev" aria-label="Previous photo">&lt;</button>' +
+          '<img alt="">' +
+          '<button class="lb-next" aria-label="Next photo">&gt;</button>' +
+        '</div>';
+      document.body.appendChild(lb);
+
+      var big = lb.querySelector('img');
+      var list = [];
+      var index = 0;
+
+      function show(i) {
+        index = (i + list.length) % list.length;
+        big.src = list[index].src;
+        big.alt = list[index].alt;
+      }
+
+      function open(imgs, i) {
+        list = imgs;
+        lb.classList.toggle('single', imgs.length < 2);
+        show(i);
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.carousel').forEach(function(box) {
+        var imgs = Array.prototype.slice.call(box.querySelectorAll('.slide img'));
+        imgs.forEach(function(img, i) {
+          img.addEventListener('click', function() { open(imgs, i); });
+        });
+      });
+
+      lb.querySelector('.lb-prev').addEventListener('click', function() { show(index - 1); });
+      lb.querySelector('.lb-next').addEventListener('click', function() { show(index + 1); });
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      // clicking the white backdrop (not the photo or a button) closes it
+      lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
+
+      document.addEventListener('keydown', function(e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (list.length > 1 && e.key === 'ArrowLeft') show(index - 1);
+        if (list.length > 1 && e.key === 'ArrowRight') show(index + 1);
+      });
+    })();
+  </script>
+
+  <script>
+    // builds < > arrows and dots for any slideshow with more than one photo
+    document.querySelectorAll('.carousel').forEach(function(box) {
+      var track = box.querySelector('.slides');
+      var count = track.children.length;
+      if (count < 2) return;
+
+      function current() { return Math.round(track.scrollLeft / track.clientWidth); }
+      // wraps around: < on the first photo goes to the last, > on the last goes to the first
+      function go(i) {
+        var wrapped = i < 0 || i > count - 1;
+        i = (i + count) % count;
+        track.scrollTo({ left: i * track.clientWidth, behavior: wrapped ? 'instant' : 'smooth' });
+        update(i);
+      }
+
+      var prev = document.createElement('button');
+      prev.className = 'arrow prev';
+      prev.textContent = '<';
+      prev.setAttribute('aria-label', 'Previous photo');
+      prev.addEventListener('click', function() { go(current() - 1); });
+
+      var next = document.createElement('button');
+      next.className = 'arrow next';
+      next.textContent = '>';
+      next.setAttribute('aria-label', 'Next photo');
+      next.addEventListener('click', function() { go(current() + 1); });
+
+      var dots = document.createElement('div');
+      dots.className = 'dots';
+      for (var i = 0; i < count; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+        dot.addEventListener('click', go.bind(null, i));
+        dots.appendChild(dot);
+      }
+
+      box.append(prev, next, dots);
+
+      function update(i) {
+        if (typeof i !== 'number') i = current();
+        Array.prototype.forEach.call(dots.children, function(d, j) {
+          d.classList.toggle('active', j === i);
+        });
+      }
+      track.addEventListener('scroll', function() { update(); }, { passive: true });
+      update();
+    });
+  </script>
 
   <script>
     function updateTime() {
