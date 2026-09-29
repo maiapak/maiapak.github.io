@@ -213,6 +213,47 @@
 
   .carousel .dot.active { background: #ffffff; }
 
+  /* ---------- Enlarged photo viewer ---------- */
+  .carousel .slide img { cursor: zoom-in; }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: #ffffff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: calc(100vw - 120px);
+    max-height: calc(100vh - 100px);
+    object-fit: contain;
+    display: block;
+  }
+
+  .lightbox button {
+    position: absolute;
+    background: none;
+    border: 0;
+    padding: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .lightbox button:hover { color: var(--green); }
+  .lightbox .lb-close { top: 2px; right: 0; }
+  .lightbox .lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+  .lightbox.single .lb-prev,
+  .lightbox.single .lb-next { display: none; }
+
   /* same look as the about page links: plain text, green on hover */
   .project a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
   .project a:hover { color: var(--green); }
@@ -227,6 +268,9 @@
     .carousel .prev { right: auto; left: 0; margin: 0; }
     .carousel .next { left: auto; right: 0; margin: 0; }
     .carousel .arrow { color: #ffffff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
+    .lightbox img { max-width: calc(100vw - 2 * var(--unit)); max-height: calc(100vh - 140px); }
+    .lightbox .lb-prev,
+    .lightbox .lb-next { top: auto; bottom: 20px; transform: none; }
   }
 
   .footer {
@@ -329,7 +373,7 @@
             <div class="slide fit"><img src="../images/kiukiu-logos.png" alt="KiuKiu brush script wordmark and red stamp logos"></div>
           </div>
         </div>
-        <p class="row-text">Rebrand for KiuKiu, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
+        <p class="row-text">Rebrand for <a href="https://eatkiukiu.com/" target="_blank" rel="noopener">KiuKiu</a>, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
       </div>
 
       <div class="project-row">
@@ -377,6 +421,63 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // click a slideshow photo to see it large; < > and arrow keys page through that slideshow
+    (function() {
+      var lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.innerHTML =
+        '<button class="lb-close">Close</button>' +
+        '<button class="lb-prev" aria-label="Previous photo">&lt;</button>' +
+        '<img alt="">' +
+        '<button class="lb-next" aria-label="Next photo">&gt;</button>';
+      document.body.appendChild(lb);
+
+      var big = lb.querySelector('img');
+      var list = [];
+      var index = 0;
+
+      function show(i) {
+        index = (i + list.length) % list.length;
+        big.src = list[index].src;
+        big.alt = list[index].alt;
+      }
+
+      function open(imgs, i) {
+        list = imgs;
+        lb.classList.toggle('single', imgs.length < 2);
+        show(i);
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.carousel').forEach(function(box) {
+        var imgs = Array.prototype.slice.call(box.querySelectorAll('.slide img'));
+        imgs.forEach(function(img, i) {
+          img.addEventListener('click', function() { open(imgs, i); });
+        });
+      });
+
+      lb.querySelector('.lb-prev').addEventListener('click', function() { show(index - 1); });
+      lb.querySelector('.lb-next').addEventListener('click', function() { show(index + 1); });
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      // clicking the white backdrop (not the photo or a button) closes it
+      lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
+
+      document.addEventListener('keydown', function(e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (list.length > 1 && e.key === 'ArrowLeft') show(index - 1);
+        if (list.length > 1 && e.key === 'ArrowRight') show(index + 1);
+      });
+    })();
+  </script>
 
   <script>
     // builds < > arrows and dots for any slideshow with more than one photo
