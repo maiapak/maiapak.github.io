@@ -1,10 +1,10 @@
-# Retakes the SCIDR homepage screenshot on the Consumer Research page every Monday.
+# Retakes the SCIDR homepage screenshot on the Consumer Research page every day (only saves it if the page changed).
 # Can also be run by hand: GitHub repo > Actions > "Update SCIDR screenshot" > Run workflow.
 name: Update SCIDR screenshot
 
 on:
   schedule:
-    - cron: "0 15 * * 1"   # Mondays, 8am Pacific
+    - cron: "0 15 * * *"   # every day, 8am Pacific
   workflow_dispatch:
 
 permissions:
