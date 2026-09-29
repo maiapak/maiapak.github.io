@@ -98,6 +98,14 @@
 
   .project-tile:hover .image img { transform: scale(1.06); }
 
+  /* show the whole image (no cropping), with room for the hover zoom */
+  .project-tile .image.fit {
+    background: #ffffff;
+    padding: 3%;
+  }
+
+  .project-tile .image.fit img { object-fit: contain; }
+
   .project-tile .caption {
     flex: 1;
     display: flex;
@@ -220,7 +228,7 @@
     </a>
 
     <a class="project-tile" href="project/stanford-management.html">
-      <div class="image"></div>
+      <div class="image fit"><img src="images/consumer-research.png" alt="Venn diagram of food, wellness, and beauty overlapping in lifestyle-driven design and innovation"></div>
       <div class="caption">
         <div class="title">Consumer Research</div>
       </div>
