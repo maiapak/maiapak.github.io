@@ -170,11 +170,10 @@
     font-size: 14px;
     color: var(--ink);
     cursor: pointer;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition: color 0.2s ease;
   }
 
   .carousel .arrow:hover { color: var(--green); }
-  .carousel .arrow:disabled { opacity: 0.25; cursor: default; color: var(--ink); }
   .carousel .prev { right: 100%; margin-right: 6px; }
   .carousel .next { left: 100%; margin-left: 6px; }
 
@@ -374,9 +373,11 @@
       if (count < 2) return;
 
       function current() { return Math.round(track.scrollLeft / track.clientWidth); }
+      // wraps around: < on the first photo goes to the last, > on the last goes to the first
       function go(i) {
-        i = Math.max(0, Math.min(count - 1, i));
-        track.scrollTo({ left: i * track.clientWidth });
+        var wrapped = i < 0 || i > count - 1;
+        i = (i + count) % count;
+        track.scrollTo({ left: i * track.clientWidth, behavior: wrapped ? 'instant' : 'smooth' });
         update(i);
       }
 
@@ -406,8 +407,6 @@
 
       function update(i) {
         if (typeof i !== 'number') i = current();
-        prev.disabled = i === 0;
-        next.disabled = i === count - 1;
         Array.prototype.forEach.call(dots.children, function(d, j) {
           d.classList.toggle('active', j === i);
         });
