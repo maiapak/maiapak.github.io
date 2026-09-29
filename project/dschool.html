@@ -130,6 +130,77 @@
     line-height: 1.15;
   }
 
+  /* ---------- Photo slideshow ----------
+     each box holds any number of .slide elements; swipe/trackpad scrolls,
+     < > arrows sit just outside the box, dots show position */
+  .carousel {
+    position: relative;
+  }
+
+  .carousel .slides {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  .carousel .slides::-webkit-scrollbar { display: none; }
+
+  .carousel .slide {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .carousel .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: 0;
+    padding: 8px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .carousel .arrow:hover { color: var(--green); }
+  .carousel .arrow:disabled { opacity: 0.25; cursor: default; color: var(--ink); }
+  .carousel .prev { right: 100%; margin-right: 6px; }
+  .carousel .next { left: 100%; margin-left: 6px; }
+
+  .carousel .dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .carousel .dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+
+  .carousel .dot.active { background: #ffffff; }
+
   /* same look as the about page links: plain text, green on hover */
   .project a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
   .project a:hover { color: var(--green); }
@@ -141,6 +212,9 @@
     .project-row { grid-template-columns: 1fr; gap: 12px; }
     .project-row .row-image,
     .project-row .row-text { grid-column: 1; max-width: none; }
+    .carousel .prev { right: auto; left: 0; margin: 0; }
+    .carousel .next { left: auto; right: 0; margin: 0; }
+    .carousel .arrow { color: #ffffff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
   }
 
   .footer {
@@ -148,7 +222,7 @@
     padding: 90px var(--unit);
     font-size: 14px;
     line-height: 1.15;
-    margin-top: 110px;
+    margin-top: 220px;
   }
 
   .footer-inner {
@@ -219,7 +293,13 @@
   </nav>
 
   <div class="project">
-    <div class="hero-image placeholder"></div>
+    <div class="hero-image carousel">
+      <div class="slides">
+        <div class="slide placeholder">Photo 1</div>
+        <div class="slide placeholder">Photo 2</div>
+        <div class="slide placeholder">Photo 3</div>
+      </div>
+    </div>
 
     <div class="project-title">
       <div><a href="https://dschool.stanford.edu/" target="_blank" rel="noopener">d.school</a></div>
@@ -230,17 +310,35 @@
 
     <div class="project-rows">
       <div class="project-row">
-        <div class="row-image placeholder"></div>
+        <div class="row-image carousel">
+          <div class="slides">
+            <div class="slide placeholder">Photo 1</div>
+            <div class="slide placeholder">Photo 2</div>
+            <div class="slide placeholder">Photo 3</div>
+          </div>
+        </div>
         <p class="row-text">Winning &ldquo;Expression&rdquo; design in Visual Frontiers. Inspired by the physical processing and design in traditional printmaking.</p>
       </div>
 
       <div class="project-row">
-        <div class="row-image placeholder"></div>
+        <div class="row-image carousel">
+          <div class="slides">
+            <div class="slide placeholder">Photo 1</div>
+            <div class="slide placeholder">Photo 2</div>
+            <div class="slide placeholder">Photo 3</div>
+          </div>
+        </div>
         <p class="row-text">Rebrand for KiuKiu, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
       </div>
 
       <div class="project-row">
-        <div class="row-image placeholder"></div>
+        <div class="row-image carousel">
+          <div class="slides">
+            <div class="slide placeholder">Photo 1</div>
+            <div class="slide placeholder">Photo 2</div>
+            <div class="slide placeholder">Photo 3</div>
+          </div>
+        </div>
         <p class="row-text">Project Manager and Event Planner for <a href="https://www.rockysmatcha.com/" target="_blank" rel="noopener">rocky&rsquo;s matcha</a> x <a href="on-call-cafe.html">On Call Cafe</a> x <a href="https://dschool.stanford.edu/" target="_blank" rel="noopener">d.school</a> entrepreneurship event.</p>
       </div>
     </div>
@@ -267,6 +365,57 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // builds < > arrows and dots for any slideshow with more than one photo
+    document.querySelectorAll('.carousel').forEach(function(box) {
+      var track = box.querySelector('.slides');
+      var count = track.children.length;
+      if (count < 2) return;
+
+      function current() { return Math.round(track.scrollLeft / track.clientWidth); }
+      function go(i) {
+        i = Math.max(0, Math.min(count - 1, i));
+        track.scrollTo({ left: i * track.clientWidth });
+        update(i);
+      }
+
+      var prev = document.createElement('button');
+      prev.className = 'arrow prev';
+      prev.textContent = '<';
+      prev.setAttribute('aria-label', 'Previous photo');
+      prev.addEventListener('click', function() { go(current() - 1); });
+
+      var next = document.createElement('button');
+      next.className = 'arrow next';
+      next.textContent = '>';
+      next.setAttribute('aria-label', 'Next photo');
+      next.addEventListener('click', function() { go(current() + 1); });
+
+      var dots = document.createElement('div');
+      dots.className = 'dots';
+      for (var i = 0; i < count; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+        dot.addEventListener('click', go.bind(null, i));
+        dots.appendChild(dot);
+      }
+
+      box.append(prev, next, dots);
+
+      function update(i) {
+        if (typeof i !== 'number') i = current();
+        prev.disabled = i === 0;
+        next.disabled = i === count - 1;
+        Array.prototype.forEach.call(dots.children, function(d, j) {
+          d.classList.toggle('active', j === i);
+        });
+      }
+      track.addEventListener('scroll', function() { update(); }, { passive: true });
+      update();
+    });
+  </script>
 
   <script>
     function updateTime() {
