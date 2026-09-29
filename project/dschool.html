@@ -159,6 +159,17 @@
     color: var(--muted);
   }
 
+  .carousel .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* shows the whole image on white instead of cropping it to fill the box */
+  .carousel .slide.fit { background: #ffffff; }
+  .carousel .slide.fit img { object-fit: contain; }
+
   .carousel .arrow {
     position: absolute;
     top: 50%;
@@ -314,18 +325,18 @@
             <div class="slide placeholder">Photo 3</div>
           </div>
         </div>
-        <p class="row-text">Winning &ldquo;Expression&rdquo; design in Visual Frontiers. Inspired by the physical processing and design in traditional printmaking.</p>
+        <p class="row-text">Rebrand for KiuKiu, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
       </div>
 
       <div class="project-row">
         <div class="row-image carousel">
           <div class="slides">
-            <div class="slide placeholder">Photo 1</div>
-            <div class="slide placeholder">Photo 2</div>
-            <div class="slide placeholder">Photo 3</div>
+            <div class="slide"><img src="../images/visual-frontiers-blue.png" alt="Visual Frontiers design in yellow on blue"></div>
+            <div class="slide fit"><img src="../images/visual-frontiers-white.png" alt="Visual Frontiers design in black, with brown and blue hoodie mockups"></div>
+            <div class="slide"><img src="../images/visual-frontiers-brown.png" alt="Visual Frontiers design in gold on brown"></div>
           </div>
         </div>
-        <p class="row-text">Rebrand for KiuKiu, a Stanford-founded CPG brand focusing on rice-based pantry staples.</p>
+        <p class="row-text">Winning &ldquo;Expression&rdquo; design in Visual Frontiers. Inspired by the physical processing and design in traditional printmaking.</p>
       </div>
 
       <div class="project-row">
