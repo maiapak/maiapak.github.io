@@ -213,14 +213,15 @@
 
   .carousel .dot.active { background: #ffffff; }
 
-  /* ---------- Enlarged photo viewer ---------- */
+  /* ---------- Enlarged photo viewer ----------
+     sits over the page (below the menu and square) so you stay grounded on the page */
   .carousel .slide img { cursor: zoom-in; }
 
   .lightbox {
     position: fixed;
     inset: 0;
-    z-index: 200;
-    background: #ffffff;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.88);
     display: none;
     align-items: center;
     justify-content: center;
@@ -228,18 +229,21 @@
 
   .lightbox.open { display: flex; }
 
+  .lightbox .lb-frame { position: relative; }
+
   .lightbox img {
-    max-width: calc(100vw - 120px);
-    max-height: calc(100vh - 100px);
+    max-width: 70vw;
+    max-height: 72vh;
     object-fit: contain;
     display: block;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
   }
 
   .lightbox button {
     position: absolute;
     background: none;
     border: 0;
-    padding: 12px;
+    padding: 8px;
     font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
     color: var(--ink);
@@ -248,9 +252,9 @@
   }
 
   .lightbox button:hover { color: var(--green); }
-  .lightbox .lb-close { top: 2px; right: 0; }
-  .lightbox .lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
-  .lightbox .lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-close { bottom: 100%; right: -8px; }
+  .lightbox .lb-prev { right: 100%; margin-right: 6px; top: 50%; transform: translateY(-50%); }
+  .lightbox .lb-next { left: 100%; margin-left: 6px; top: 50%; transform: translateY(-50%); }
   .lightbox.single .lb-prev,
   .lightbox.single .lb-next { display: none; }
 
@@ -268,9 +272,11 @@
     .carousel .prev { right: auto; left: 0; margin: 0; }
     .carousel .next { left: auto; right: 0; margin: 0; }
     .carousel .arrow { color: #ffffff; text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); }
-    .lightbox img { max-width: calc(100vw - 2 * var(--unit)); max-height: calc(100vh - 140px); }
+    .lightbox img { max-width: calc(100vw - 4 * var(--unit)); max-height: 70vh; }
     .lightbox .lb-prev,
-    .lightbox .lb-next { top: auto; bottom: 20px; transform: none; }
+    .lightbox .lb-next { top: 100%; transform: none; margin: 0; }
+    .lightbox .lb-prev { right: auto; left: -8px; }
+    .lightbox .lb-next { left: auto; right: -8px; }
   }
 
   .footer {
@@ -428,10 +434,12 @@
       var lb = document.createElement('div');
       lb.className = 'lightbox';
       lb.innerHTML =
-        '<button class="lb-close">Close</button>' +
-        '<button class="lb-prev" aria-label="Previous photo">&lt;</button>' +
-        '<img alt="">' +
-        '<button class="lb-next" aria-label="Next photo">&gt;</button>';
+        '<div class="lb-frame">' +
+          '<button class="lb-close">Close</button>' +
+          '<button class="lb-prev" aria-label="Previous photo">&lt;</button>' +
+          '<img alt="">' +
+          '<button class="lb-next" aria-label="Next photo">&gt;</button>' +
+        '</div>';
       document.body.appendChild(lb);
 
       var big = lb.querySelector('img');
