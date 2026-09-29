@@ -216,6 +216,16 @@
   /* ---------- Linked screenshots and embedded websites ---------- */
   .carousel a.slide img { cursor: pointer; }
 
+  /* a full-page screenshot you can scroll through inside the box */
+  .carousel .slide.scroll {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .carousel .slide.scroll img {
+    height: auto;
+  }
+
   /* a live website shown at desktop size, scaled down to fit the box (scale set in the script below) */
   .carousel .slide.embed {
     position: relative;
@@ -384,7 +394,7 @@
   <div class="project">
     <div class="hero-image carousel">
       <div class="slides">
-        <a class="slide" href="https://scidr.stanford.edu/" target="_blank" rel="noopener"><img src="../images/scidr-site.jpg" alt="SCIDR website homepage"></a>
+        <a class="slide scroll" href="https://scidr.stanford.edu/" target="_blank" rel="noopener"><img src="../images/scidr-site.jpg" alt="SCIDR website homepage"></a>
       </div>
     </div>
 

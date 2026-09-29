@@ -1,0 +1,43 @@
+# Retakes the SCIDR homepage screenshot on the Consumer Research page every Monday.
+# Can also be run by hand: GitHub repo > Actions > "Update SCIDR screenshot" > Run workflow.
+name: Update SCIDR screenshot
+
+on:
+  schedule:
+    - cron: "0 15 * * 1"   # Mondays, 8am Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Take screenshot
+        run: |
+          pip install playwright pillow
+          python scripts/update_scidr_screenshot.py
+
+      - name: Publish if it changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add images/scidr-site.jpg
+          if git diff --cached --quiet; then
+            echo "Screenshot unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update SCIDR screenshot"
+          git push
+          # make sure GitHub Pages rebuilds with the new image
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
