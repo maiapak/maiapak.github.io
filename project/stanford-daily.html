@@ -290,8 +290,9 @@
 
   .project-rows.after-wide { margin-top: 135px; }
 
-  /* favorite story title is always green, not just on hover */
-  .project a.highlight { color: var(--green); }
+  /* favorite story title is always green; a darker shade of the site green so it reads on white */
+  .project a.highlight { color: #8A8E1B; }
+  .project a.highlight:hover { color: var(--green); }
 
   /* same look as the about page links: plain text, green on hover */
   .project a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
