@@ -1,5 +1,5 @@
-# Retakes the SCIDR and Wellness House Seoul screenshots on the Consumer Research page every day
-# (only saves one if that page changed).
+# Retakes the website screenshots on the Consumer Research and Journalism pages every day
+# (only saves one if that page changed). The list of sites is in scripts/update_site_screenshots.py.
 # Can also be run by hand: GitHub repo > Actions > "Update website screenshots" > Run workflow.
 name: Update website screenshots
 
@@ -31,7 +31,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add images/scidr-site.jpg images/wellnesshouse-site.jpg
+          git add images
           if git diff --cached --quiet; then
             echo "Screenshots unchanged."
             exit 0
