@@ -159,16 +159,16 @@
     display: block;
     width: calc((100% - 3 * 20px) / 4);
     aspect-ratio: 4 / 5;
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
     border: 1px solid var(--placeholder);
   }
 
   .proof img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
+    height: auto;
     transition: opacity 0.2s ease;
   }
 
