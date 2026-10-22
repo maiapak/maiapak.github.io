@@ -121,6 +121,35 @@
     display: block;
   }
 
+  .project-simple {
+    padding-top: 96px;
+    text-align: center;
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .project-note {
+    margin-top: 110px;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-note .soon { font-style: italic; }
+
+  .project-note a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .project-note a:hover { color: var(--green); }
+
   .footer {
     background: var(--green);
     padding: 90px var(--unit);
@@ -196,17 +225,12 @@
     <a href="../about.html">About</a>
   </nav>
 
-  <div class="project">
-    <div class="project-header">
-      <a class="back" href="../projects-main.html">&larr; All projects</a>
-      <h1>On Call Cafe</h1>
-      <div class="category">Brand Strategy</div>
-    </div>
+  <div class="project project-simple">
+    <img class="hero-image" src="../images/on-call-cafe.jpg" alt="On Call Cafe">
 
-    <div class="project-image">Project image</div>
-
-    <div class="project-body">
-      <p>Project details coming soon.</p>
+    <div class="project-note">
+      <div class="soon">More details coming soon.</div>
+      <a href="https://www.oncall.cafe/" target="_blank" rel="noopener">https://www.oncall.cafe/</a>
     </div>
   </div>
 

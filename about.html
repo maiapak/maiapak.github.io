@@ -177,49 +177,6 @@
     .footer-inner { flex-direction: column; gap: 24px; }
     .footer-right { gap: 32px; flex-wrap: wrap; }
   }
-  /* ---------- Password gate ---------- */
-
-  .gate {
-    position: fixed;
-    inset: 0;
-    background: #ffffff;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gate-box {
-    text-align: center;
-  }
-
-  .gate-box p {
-    font-size: 14px;
-    margin: 0 0 14px 0;
-    color: var(--ink);
-  }
-
-  .gate-box input {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 14px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    text-align: center;
-    outline: none;
-    width: 180px;
-  }
-
-  .gate-box input:focus {
-    border-color: var(--green);
-  }
-
-  .gate-error {
-    font-size: 12px;
-    color: var(--coral);
-    margin-top: 10px;
-    height: 14px;
-  }
-
   .nav-dropdown {
     position: relative;
   }
@@ -258,41 +215,6 @@
 </style>
 </head>
 <body>
-
-  <div class="gate" id="siteGate">
-    <div class="gate-box">
-      <p>This site is private.</p>
-      <input type="password" id="gatePassword" placeholder="Password" autocomplete="off">
-      <div class="gate-error" id="gateError"></div>
-    </div>
-  </div>
-
-  <script>
-    (function() {
-      var CORRECT = 'stickyrice';
-      var gate = document.getElementById('siteGate');
-      var input = document.getElementById('gatePassword');
-      var error = document.getElementById('gateError');
-
-      if (sessionStorage.getItem('site_unlocked') === 'yes') {
-        gate.style.display = 'none';
-      } else {
-        input.focus();
-      }
-
-      input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          if (input.value.trim().toLowerCase() === CORRECT) {
-            sessionStorage.setItem('site_unlocked', 'yes');
-            gate.style.display = 'none';
-          } else {
-            error.textContent = 'Incorrect password';
-            input.value = '';
-          }
-        }
-      });
-    })();
-  </script>
 
   <div class="swatch"></div>
 
