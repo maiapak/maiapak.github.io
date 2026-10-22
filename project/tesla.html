@@ -121,6 +121,63 @@
     display: block;
   }
 
+  .project-simple {
+    padding-top: 96px;
+    max-width: 1100px;
+    text-align: center;
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .project-note {
+    margin-top: 56px;
+    font-size: 14px;
+    line-height: 1.15;
+  }
+
+  .project-note .summary {
+    max-width: 470px;
+    margin: 44px auto 0;
+  }
+
+  .proofs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 820px;
+    margin: 110px auto 0;
+  }
+
+  .proof {
+    display: block;
+    width: calc((100% - 3 * 20px) / 4);
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--placeholder);
+  }
+
+  .proof img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: opacity 0.2s ease;
+  }
+
+  .proof:hover img { opacity: 0.85; }
+
+  @media (max-width: 760px) {
+    .proof { width: calc((100% - 20px) / 2); }
+  }
+
   .footer {
     background: var(--green);
     padding: 90px var(--unit);
@@ -191,22 +248,27 @@
   <div class="swatch"></div>
 
   <nav class="top-nav">
-    <a href="../index.html">Home</a>
-    <a href="../projects-main.html">Projects</a>
+    <a href="../home.html">Home</a>
+    <a href="../index.html">Projects</a>
     <a href="../about.html">About</a>
   </nav>
 
-  <div class="project">
-    <div class="project-header">
-      <a class="back" href="../projects-main.html">&larr; All projects</a>
-      <h1>Tesla Design Studio</h1>
-      <div class="category">Communications</div>
+  <div class="project project-simple">
+    <img class="hero-image" src="../images/tesla.jpg" alt="Tesla Design Studio">
+
+    <div class="project-note">
+      <div class="role">Design Studio Intern</div>
+      <p class="summary">I worked on global communications at Tesla in the summer of 2026. My team led copy and communications strategies for product launches, local events, and education, worldwide.</p>
     </div>
 
-    <div class="project-image">Project image</div>
-
-    <div class="project-body">
-      <p>Project details coming soon.</p>
+    <div class="proofs">
+      <a class="proof" href="../images/tesla/model-yl-event.jpg" target="_blank" rel="noopener"><img src="../images/tesla/model-yl-event.jpg" alt="Celebrate Model Y L Premium With Us email" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/model-yl-features.jpg" target="_blank" rel="noopener"><img src="../images/tesla/model-yl-features.jpg" alt="More to Celebrate: Model Y L Premium features email" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/santana-row.jpg" target="_blank" rel="noopener"><img src="../images/tesla/santana-row.jpg" alt="Santana Row showroom reopening email" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/wall-connector.jpg" target="_blank" rel="noopener"><img src="../images/tesla/wall-connector.jpg" alt="Wall Connector installation email" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/gris-zen.jpg" target="_blank" rel="noopener"><img src="../images/tesla/gris-zen.jpg" alt="Gris Zen interior email (Spanish)" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/chile-long-range.jpg" target="_blank" rel="noopener"><img src="../images/tesla/chile-long-range.jpg" alt="Model 3 and Model Y Premium Long Range launch email for Chile (Spanish)" loading="lazy"></a>
+      <a class="proof" href="../images/tesla/chile-model-3.jpg" target="_blank" rel="noopener"><img src="../images/tesla/chile-model-3.jpg" alt="Model 3 launch email for Chile (Spanish)" loading="lazy"></a>
     </div>
   </div>
 
@@ -218,8 +280,8 @@
       </div>
       <div class="footer-right">
         <div class="footer-col">
-          <a href="../index.html">Home</a>
-          <a href="../projects-main.html">Projects</a>
+          <a href="../home.html">Home</a>
+          <a href="../index.html">Projects</a>
           <a href="../about.html">About</a>
         </div>
         <div class="footer-col">
